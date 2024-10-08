@@ -84,6 +84,19 @@ Para cargar la nueva distribución ingresar:
 setxkbmap latam ldvd
 ```
 
+#### Xmodmap
+
+En caso que no se tenga acceso a root o solo desee usar la distribución de manera temporal o solo habilitarlo para un usuario,
+puede copiar el archivo `./Linux/xmodmap-ldvd` en el home del usuario y ejecutar el comando:
+
+```bash
+xmodmap $HOME/xmodmap-ldvd
+```
+
+Es necesario tener instalado el paquete `xmodmap` para que esto funcione y solo estará activo durante la sesión del usuario, si
+desea que esto sea permanente, debe registrar el comando en un script de inicio (`.xinitrc`, `autostart.sh`, etc.)
+
+
 #### Keymap de consola
 
 Copiar el archivo `./Linux/ldvd.map.gz` al diretorio de keymaps (Normalmente `/usr/share/keymaps/i386/dvorak/`):
