@@ -84,6 +84,11 @@ Para cargar la nueva distribución ingresar:
 setxkbmap latam ldvd
 ```
 
+> **Nota:** He creado un script para cargar la distribución en la sesión actual, para ello se debe ejecutar el comando:
+> ```bash
+> sudo ./x-install-linux
+> ```
+
 #### Xmodmap
 
 En caso que no se tenga acceso a root o solo desee usar la distribución de manera temporal o solo habilitarlo para un usuario,
@@ -96,6 +101,9 @@ xmodmap $HOME/xmodmap-ldvd
 Es necesario tener instalado el paquete `xmodmap` para que esto funcione y solo estará activo durante la sesión del usuario, si
 desea que esto sea permanente, debe registrar el comando en un script de inicio (`.xinitrc`, `autostart.sh`, etc.)
 
+#### Wayland
+
+***Pendiente por implementar...***
 
 #### Keymap de consola
 

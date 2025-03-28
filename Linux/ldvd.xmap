@@ -1,9 +1,24 @@
 
-// Latin American Spanish Dvorak mapping for developers (Walter Rodriguez)
+// Latinamerican DVorak for Developers (Walter Rodriguez <wfabianrs@gmail.com>)
+//
+//            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+//                    Version 2, December 2004
+//
+// Copyright (C) 2004 Sam Hocevar
+//  14 rue de Plaisance, 75014 Paris, France
+// Everyone is permitted to copy and distribute verbatim or modified
+// copies of this license document, and changing it is allowed as long
+// as the name is changed.
+//
+//            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+//   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+//
+//  0. You just DO WHAT THE FUCK YOU WANT TO.
+//
 partial alphanumeric_keys
 xkb_symbols "ldvd" {
 
-    name[Group1]="Spanish (Latin American Dvorak For Developers)";
+    name[Group1]="Spanish (Latinamerican DVorak for Developers)";
 
     key <TLDE> {[ dollar, asciitilde, notsign ]};
     key <AE01> {[ ampersand, 1 ]};
@@ -57,7 +72,7 @@ xkb_symbols "ldvd" {
     key <AB09> {[ v, V ]};
     key <AB10> {[ z, Z ]};
 
-    
+
     ////////////////////////////////////////////////////////////////////
     // Cambia de posición las teclas Ctrl y Caps Lock (Bloq Mayús)
     // Si no necesita cambiar estas teclas, puede comentar o borrar estas
