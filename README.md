@@ -32,7 +32,7 @@ sudo cp /usr/share/X11/xkb/rules/evdev.xml /usr/share/X11/xkb/rules/evdev.xml.ba
 sudo cp /usr/share/X11/xkb/rules/evdev.lst /usr/share/X11/xkb/rules/evdev.lst.bak
 ```
 
-Agregar el contenido del archivo `./Linuxldvd.xmap` al final del archivo `/usr/share/X11/xkb/simbols/latam`:
+Agregar el contenido del archivo `./Linux/ldvd.xmap` al final del archivo `/usr/share/X11/xkb/simbols/latam`:
 
 ```bash
 cat ./Linuxldvd.xmap >> /usr/share/X11/xkb/symbols/latam
