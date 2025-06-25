@@ -35,7 +35,7 @@ sudo cp /usr/share/X11/xkb/rules/evdev.lst /usr/share/X11/xkb/rules/evdev.lst.ba
 Agregar el contenido del archivo `./Linux/ldvd.xmap` al final del archivo `/usr/share/X11/xkb/simbols/latam`:
 
 ```bash
-cat ./Linuxldvd.xmap >> /usr/share/X11/xkb/symbols/latam
+cat ./Linux/ldvd.xmap >> /usr/share/X11/xkb/symbols/latam
 ```
 
 A continuación, editar el archivo `/usr/share/X11/xkb/rules/evdev.xml` y agregar la variante dentro de la distribución `latam` de
@@ -101,9 +101,31 @@ xmodmap $HOME/xmodmap-ldvd
 Es necesario tener instalado el paquete `xmodmap` para que esto funcione y solo estará activo durante la sesión del usuario, si
 desea que esto sea permanente, debe registrar el comando en un script de inicio (`.xinitrc`, `autostart.sh`, etc.)
 
-#### Wayland
+#### Wayland - Hyprland
 
-***Pendiente por implementar...***
+Wayland soporta la definicion por xkb, entonces se debe copiar el achivo `./Linux/ldvd.xmap`
+
+```bash
+cp ./Linux/ldvd.xmap /usr/share/X11/xkb/symbols/ldvd
+```
+
+En el archivo `~/.config/hyprland.conf` modificar la sección input de la siguiente forma:
+
+```
+input {
+    kb_layout = mi_layout
+    kb_variant = ldvd
+    kb_model = pc105
+    //....
+}
+```
+
+Si al guardar el archivo 'hyprland.conf' no cambia el layout, ejecutar el comando:
+
+```bash
+hyprctl devices
+```
+
 
 #### Keymap de consola
 
