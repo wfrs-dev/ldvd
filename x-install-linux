@@ -1,0 +1,121 @@
+#!/usr/bin/env python
+
+import xml.etree.ElementTree as ET
+import xml.dom.minidom
+import shutil
+import os
+import sys
+
+
+if os.geteuid() != 0:
+    print("Este script solo puede ser ejecutado por root o a través de sudo.")
+    sys.exit(1)
+
+# Solo se usa para pruebas locales
+prefix = ""
+
+
+# Crear el nuevo nodo con indentación
+def indent(elem, level=0):
+    """Función para aplicar indentación recursiva en XML"""
+    indent_str = "  "  # Espacios para indentar (2 espacios por nivel)
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = (level + 1) * indent_str
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = level * indent_str
+        for child in elem:
+            indent(child, level + 1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = level * indent_str
+    elif level and (not elem.tail or not elem.tail.strip()):
+        elem.tail = level * indent_str
+
+
+if __name__ == "__main__":
+    # realizar backup de los archivos originales
+    print("⇶ Realizando backup de los archivos originales...")
+    shutil.copy2(
+        prefix + "/usr/share/X11/xkb/rules/evdev.xml",
+        prefix + "/usr/share/X11/xkb/rules/evdev.xml.bak",
+    )
+    shutil.copy2(
+        prefix + "/usr/share/X11/xkb/rules/evdev.lst",
+        prefix + "/usr/share/X11/xkb/rules/evdev.lst.bak",
+    )
+    shutil.copy2(
+        prefix + "/usr/share/X11/xkb/symbols/latam",
+        prefix + "/usr/share/X11/xkb/symbols/latam.bak",
+    )
+
+    print("⇶ Agregando configuración del teclado ldvd...")
+    with open("./Linux/ldvd.xmap", "r", encoding="utf-8") as f:
+        config = f.read()
+
+    with open(prefix + "/usr/share/X11/xkb/symbols/latam", "a", encoding="utf-8") as f:
+        f.write("\n" + config)
+
+    print("⇶ Agregando distribución ldvd a evdev.xml...")
+    # Cargar el archivo XML
+    tree = ET.parse(prefix + "/usr/share/X11/xkb/rules/evdev.xml")
+    root = tree.getroot()
+
+    # Definir el nuevo nodo
+    new_variant = ET.Element("variant")
+    config_item = ET.SubElement(new_variant, "configItem")
+    name = ET.SubElement(config_item, "name")
+    name.text = "ldvd"
+    desc = ET.SubElement(config_item, "description")
+    desc.text = "Spanish (Latin American Dvorak for Developers)"
+
+    # Buscar <layout> con configItem.name == "latam"
+    for layout in root.findall(".//layout"):
+        config_name = layout.find("./configItem/name")
+        if config_name is not None and config_name.text == "latam":
+            variant_list = layout.find("variantList")
+            if variant_list is None:
+                variant_list = ET.SubElement(layout, "variantList")
+            variant_list.append(new_variant)  # Agregar el nuevo nodo
+            break  # Solo modificar el primer match
+
+    indent(root)
+
+    xml_str = ET.tostring(root, encoding="utf-8")
+    pretty_xml = xml.dom.minidom.parseString(xml_str).toprettyxml(indent="  ")
+
+    # Eliminar líneas en blanco adicionales
+    pretty_xml = "\n".join([line for line in pretty_xml.splitlines() if line.strip()])
+
+    with open(
+        prefix + "/usr/share/X11/xkb/rules/evdev.xml", "w", encoding="utf-8"
+    ) as f:
+        f.write(pretty_xml)
+
+    print("⇶ Agregando distribución ldvd a evdev.lst...")
+    with open(
+        prefix + "/usr/share/X11/xkb/rules/evdev.lst", "r", encoding="utf-8"
+    ) as f:
+        lineas = f.readlines()
+
+    pos = 0
+    for i, linea in enumerate(lineas):
+        if "latam:" in linea:
+            pos = i
+            break
+
+    if pos != 0:
+        lineas.insert(
+            pos,
+            "  ldvd            latam: Spanish (Latin American Dvorak for Developers)\n",
+        )
+
+    with open(
+        prefix + "/usr/share/X11/xkb/rules/evdev.lst", "w", encoding="utf-8"
+    ) as f:
+        f.writelines(lineas)
+
+    print(
+        "Configuración de la distribución 'Latin American Dvorak for Developers' agregada,\n"
+        + "para configurarla en la sesión actual, ejecute:\n"
+        + "    setxkbmap latam ldvd"
+    )

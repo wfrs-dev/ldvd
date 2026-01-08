@@ -81,5 +81,11 @@ xkb_symbols "ldvd" {
     key <CAPS> {[ Control_L ]};
     ////////////////////////////////////////////////////////////////////
 
+    // Modificación de la tecla MENU por SUPER_L (Para teclados que no tienen la tecla SUPER derecha)
+    key <MENU> {[Super_L]};
+
+    modifier_map Mod4 { <LWIN>, <RWIN>, <MENU> };
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    
     include "level3(ralt_switch)"
 };
