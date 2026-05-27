@@ -1,15 +1,4 @@
-```
-╦  ┌─┐┌┬┐┬┌┐┌┌─┐┌┬┐┌─┐┬─┐┬┌─┐┌─┐┌┐┌
-║  ├─┤ │ ││││├─┤│││├┤ ├┬┘││  ├─┤│││
-╩═╝┴ ┴ ┴ ┴┘└┘┴ ┴┴ ┴└─┘┴└─┴└─┘┴ ┴┘└┘
-╔╦╗╦  ╦┌─┐┬─┐┌─┐┬┌─
- ║║╚╗╔╝│ │├┬┘├─┤├┴┐
-═╩╝ ╚╝ └─┘┴└─┴ ┴┴ ┴
-┌─┐┌─┐┬─┐  ╔╦╗┌─┐┬  ┬┌─┐┬  ┌─┐┌─┐┌─┐┬─┐┌─┐
-├┤ │ │├┬┘   ║║├┤ └┐┌┘├┤ │  │ │├─┘├┤ ├┬┘└─┐
-└  └─┘┴└─  ═╩╝└─┘ └┘ └─┘┴─┘└─┘┴  └─┘┴└─└─┘
-==========================================
-```
+# Latinamerican DVorak for Developers (ldvd)
 
 Distribución de teclado Dvorak latinoamericano orientado a desarrolladores, basado en las distribuciones:
 
@@ -101,13 +90,15 @@ xmodmap $HOME/xmodmap-ldvd
 Es necesario tener instalado el paquete `xmodmap` para que esto funcione y solo estará activo durante la sesión del usuario, si
 desea que esto sea permanente, debe registrar el comando en un script de inicio (`.xinitrc`, `autostart.sh`, etc.)
 
-#### Wayland - Hyprland
+#### Wayland
 
 Wayland soporta la definicion por xkb, entonces se debe copiar el achivo `./Linux/ldvd.xmap`
 
 ```bash
 cp ./Linux/ldvd.xmap /usr/share/X11/xkb/symbols/ldvd
 ```
+
+##### Hyprland
 
 En el archivo `~/.config/hyprland.conf` modificar la sección input de la siguiente forma:
 
@@ -124,6 +115,24 @@ Si al guardar el archivo 'hyprland.conf' no cambia el layout, ejecutar el comand
 
 ```bash
 hyprctl devices
+```
+
+##### Niri
+
+En el archivo `~/.config/niri/niri.conf` modificar la sección input de la siguiente forma:
+
+```
+...
+input {
+    keyboard{
+        xkb {
+            layout  "ldvd"
+        }
+        ...
+    }
+    ...
+}
+...
 ```
 
 
