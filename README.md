@@ -7,6 +7,9 @@ Distribución de teclado Dvorak latinoamericano orientado a desarrolladores, bas
 
 ![Teclado ldvd - *Latinamerican DVorak for Developers*](./assets/ldvd.svg)
 
+
+> ¿Te gusta la distribución? puedes probarla con el [entrenador de ldvd](https://github.com/wfrs-dev/ldvdt) que he creado.
+
 ## Instalación
 
 ### Linux
