@@ -5,7 +5,7 @@ Distribución de teclado Dvorak latinoamericano orientado a desarrolladores, bas
 - [Dvorak Latam](https://github.com/flobosg/latam-dvorak)
 - [Programmer Dvorak Keyboard Layout](https://www.kaufmann.no/roland/dvorak/)
 
-![Teclado ldvd - *Latinamerican DVorak for Developers*](./assets/ldvd.png)
+![Teclado ldvd - *Latinamerican DVorak for Developers*](./assets/ldvd.svg)
 
 ## Instalación
 
@@ -72,23 +72,6 @@ Para cargar la nueva distribución ingresar:
 ```bash
 setxkbmap latam ldvd
 ```
-
-> **Nota:** He creado un script para cargar la distribución en la sesión actual, para ello se debe ejecutar el comando:
-> ```bash
-> sudo ./x-install-linux
-> ```
-
-#### Xmodmap
-
-En caso que no se tenga acceso a root o solo desee usar la distribución de manera temporal o solo habilitarlo para un usuario,
-puede copiar el archivo `./Linux/xmodmap-ldvd` en el home del usuario y ejecutar el comando:
-
-```bash
-xmodmap $HOME/xmodmap-ldvd
-```
-
-Es necesario tener instalado el paquete `xmodmap` para que esto funcione y solo estará activo durante la sesión del usuario, si
-desea que esto sea permanente, debe registrar el comando en un script de inicio (`.xinitrc`, `autostart.sh`, etc.)
 
 #### Wayland
 
@@ -214,7 +197,44 @@ $ sudo cp ./Linux/ldvd.map.gz /usr/share/keymaps/i386/dvorak
 
 En Windows se creó esta distribución a través de la aplicación *Microsoft Keyboard Layout Creator*, pero esta no permite remapear
 las teclas que tengan una función común (`Espacio`, `Tab`, `Enter`, `Control`, etc.). En este caso la tecla `Control` y `Bloq Mayus` no
-se intercambian. Si alguien sabe como se puede hacer este cambio (Sin necesidad de incluir algún programa extra o realizar cambios
+se intercambian.
+
+Hasta el momento he encontrado dos formas de realizar este intercambio de la tecla control en Windows, no está 100% probado, no
+uso Windows sino en casos muy puntuales.
+
+#### A través de Regedit
+
+Se puede a traves de regedit intercambiar las teclas Ctrl y BloqMayus a traves de la siguiente clave:
+
+```regedit
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]
+"ScanCode Map"=hex:00,00,00,00,00,00,00,00,03,00,00,00,1d,00,3a,00,3a,00,1d,00,00,00,00,00
+```
+
+Para restaurar las teclas a su estado original:
+
+```regedit
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]
+"ScanCode Map"=-
+```
+
+La desventaja de esta opción es que esta configuración se implementa a nivel de sistema operativo, si varios usuarios usan el
+equipo puede causar confusión. Es recomendable usarlo si el equipo lo usa un usuaro o si se define el layout a nivel global.
+
+##### A traves de Microsoft Power Toys
+
+[Microsoft PowerToys](https://github.com/microsoft/PowerToys) es un conjunto de utilidades gratuitas y de código abierto diseñadas para ayudar a los usuarios avanzados y
+desarrolladores a sacar más partido de Windows. Existe una utilidad llamada [Keyboard Manager](https://learn.microsoft.com/es-mx/windows/powertoys/keyboard-manager)
+que permite reasignar cualquiera de las teclas del teclado, la configuración más básica es intercambiar las teclas Ctrl y
+BloqMayus:
+
+![PowerToys Keyboard Manager](./assets/powertoys.png)
+
+Si alguien sabe como se puede hacer este cambio (Sin necesidad de incluir algún programa extra o realizar cambios
 que comprometan el sistema operativo) se pueden comunicar conmigo a traves del correo `wfabianrs@gmail.com`.
 
 
